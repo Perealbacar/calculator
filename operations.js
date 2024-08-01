@@ -37,3 +37,4 @@ function operate(firstNum, operator, lastNum){
 
     return totalNum;
 }
+
