@@ -1,5 +1,6 @@
 let totalNum = 0;
 
+
 const operators = "+-*/%";
 const numbers = "1234567890";
 
@@ -45,18 +46,31 @@ function Operate(firstNum, operator, lastNum){
             break;
         case "":
             totalNum = 0;
-            break;        
+            break;              
     }
-    ResetValues();
+    
+    SetOperatedValues();
     return totalNum;
 }
 
+function SetOperatedValues(){
 
+    operator = undefined;
+    lastNum = undefined;
+    operated = true;
+}
 
 function ResetValues(){
 
     operator = undefined;
     lastNum = undefined;
+    operated = false;
+    totalNum = 0;
+    display.textContent = 0;
+
+}
+function WriteNumbers(text){
+    display.textContent += text
 }
 
 
@@ -87,51 +101,63 @@ function IsOperator(text){
 
 equal.addEventListener("click", e => {
 
+    let text = e.target.textContent;
+
+    //ifIsNumber do this:
+
+    
+    
     lastNum = display.textContent.split('').filter((char) => numbers.includes(char)).join('');
     console.log("totalNum: " + totalNum + "operator:" + operator + "lastNum:" + lastNum + "equals")
     
-    console.log(operator);
-    console.log( operator === "+");
-    console.log(totalNum);
-    console.log(lastNum);
+    if(lastNum === ""){
+        return ChangeDisplay(0);
+    }    
 
     display.textContent = Operate(totalNum, operator, lastNum);
     e.stopPropagation()
 
 })
 
+const ac = document.querySelector(".AC")
+
+ac.addEventListener("click", e =>{
+    e.stopPropagation();
+    ResetValues();
+})
+
 
 calculator.addEventListener("click", e =>{
     
     let text = e.target.textContent;
-    if (totalNum === 0){
-        
-        display.textContent = text;
-        totalNum = text;
-        console.log("1")
-    }
 
-    else if(!IsOperator(text)){
+    if (isNumerical(text)){
 
-        if(operator != undefined && lastNum != undefined){
-            
-            
-            ChangeDisplay(text);
+        if(display.textContent == 0 || operated){
+            display.textContent = text;
+            operated = false;
         }
-        else{
 
+        else if(display.textContent != 0){
             display.textContent += text;
-        }
-        
-        console.log("2")
-    }   
-    
-    else{
-        ChangeDisplay(text);
-        console.log("3")
+        }        
     }
     
+    if(IsOperator(text)){
+        totalNum = display.textContent;
+        display.textContent = text;
+    }
+
 })
+
+function isNumerical(text){
+    
+    return numbers.includes(text)
+}
+
+function isOperator(text){
+    return operators.includes(text)
+}
     
 
 
