@@ -23,11 +23,8 @@
 }
 
 .border{
-    flex:4 1 auto;
-    
+    flex:4 1 auto;    
 }
-
-
 
 .calculator{
     background-color: rgba(255, 255, 255, 0.202);    
