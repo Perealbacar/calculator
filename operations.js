@@ -183,6 +183,9 @@ calculator.addEventListener("click", e =>{
     let text = e.target.textContent;
 
     if (IsNumerical(text)){
+        if(text == "." && display.textContent.includes(".")){
+            return
+        }
         if(IsFirstNum()){
             if(display.textContent == 0 || operated == true){
                 operated = false;
@@ -216,6 +219,7 @@ calculator.addEventListener("click", e =>{
     }
     
     else if(IsOperator(text)){
+        
         operated = false;
         
         if(writtenFirstNum == false){
